@@ -10,7 +10,7 @@
 
 (defn log [value & args]
   (let [line     (str (current-date-str) " - INFO - [" (get-pid) "] - " (if (empty? args) value (str value " " args)))]
-    (println "log:" line)
+    (println "log: " line)
     (sh* (str "echo \"" line "\" >> imgot.log"))))
 
 (defn rand-int [n]
