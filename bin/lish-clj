@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#source: lish-clj
+#description: Lish Complements. i.e. clojure like functions
+echo "Loading complementary functions ..."
+
+spit () {
+    echo "${ANON["${2}"]}" > "${ANON["${1}"]}"
+    r="${__nil}"
+}
+
+declare -A clj_ns=(
+    [spit]=spit
+    )

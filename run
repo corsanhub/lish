@@ -6,7 +6,7 @@ if [[ $# -eq 0 ]] ; then
     lish
     exit 0
 else
-  script="$1.clj"
+  script="$1.clj"  
   lish $script "${@:2}"
 fi
 

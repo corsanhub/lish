@@ -2,6 +2,7 @@
 #
 # mal (Make a Lisp) object types
 #
+source lish-init
 
 if [ -z "${__mal_types_included__}" ]; then
 __mal_types_included=true
@@ -1132,6 +1133,9 @@ declare -A core_ns=(
     [swap!]=swap_BANG)
 
 fi
+
+source "lish-clj"
+source "lish-ext"
 #!/usr/bin/env bash
 
 
@@ -1391,7 +1395,11 @@ _fref () {
     _function "${2} \"\${@}\""
     ENV_SET "${REPL_ENV}" "${sym}" "${r}"
 }
+
 for n in "${!core_ns[@]}"; do _fref "${n}" "${core_ns["${n}"]}"; done
+for n in "${!clj_ns[@]}"; do _fref "${n}" "${clj_ns["${n}"]}"; done
+for n in "${!ext_ns[@]}"; do _fref "${n}" "${ext_ns["${n}"]}"; done
+
 _eval () { EVAL "${1}" "${REPL_ENV}"; }
 _fref "eval" _eval
 _list; argv="${r}"
@@ -1571,7 +1579,7 @@ read -d "" __FLECK__REPCAPTURE << __FLECK__INLINEMALFILE
 
 __FLECK__INLINEMALFILE
 REP "(do ${__FLECK__REPCAPTURE})";
-REP "(def! *lish-revision* \"version 0.1.1\")"
+REP "(def! *lish-revision* \"version ${x_lishVersion}\")"
 ( return 0 2>/dev/null ) && _fleck_sourced=1 || _fleck_sourced=0
 
 if [ "${_fleck_sourced}" = "0" ]
@@ -1585,7 +1593,7 @@ then
 
   # repl loop
   if [[ -t 0 ]]; then
-    REP "(println (str \"Lish \" *lish-revision*))"
+    REP "(println (str \"Lish - \" *lish-revision*))"
     while true; do
       READLINE "user> " || exit "$?"
       [[ "${r}" ]] && REP "(do ${r})" && echo "${r}"
