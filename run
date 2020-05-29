@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+export PATH="$PWD/bin:$PATH"
+
+if [[ $# -eq 0 ]] ; then
+    lish
+    exit 0
+else
+  script="$1.clj"  
+  lish $script "${@:2}"
+fi
+

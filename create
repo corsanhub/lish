@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+script="$1.clj"
+echo "#!/usr/bin/env lish" > $script
+echo ";(ns $1)" >> $script
+echo "" >> $script
+echo "(defn say-hello [name]" >> $script
+echo "  (println (str \"Hello there \" name \"!\")))" >> $script
+echo "" >> $script
+echo "(say-hello \"K'ptzin\")" >> $script
+
+chmod +x $script

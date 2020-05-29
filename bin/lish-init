@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#source: lish-init
+#description: Lish Initializer
+
+echo "Initializing Lish ..."
+export x_lishVersion=$(cat VERSION)
+
+if [ -z "$LISH_LOG_FILE" ] ; then
+    export x_logFile="lish.log"
+    echo "Variable LISH_LOG_FILE has not found, using default file [$x_logFile]."
+else
+    export x_logFile=$LISH_LOG_FILE
+fi
