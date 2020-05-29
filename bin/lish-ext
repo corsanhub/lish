@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#source: lish-ext
+#description: Lish extensions. i.e. Additional functions
+echo "Loading extension functions ..."
+
+get-pid () {
+    local text="${BASHPID}";
+    _number "${text}"
+}
+
+get-ppid () {
+    local text="${$}";
+    _number "${text}"
+}
+
+current-date () {
+    _string "$(date '+%Y-%m-%d %H:%M:%S.%N' |cut -b1-23)"
+}
+
+log () {
+    current-date ; local cdate="${r}"
+    get-ppid     ; local ppid="${r}"
+
+    local res=""
+    for x in "${@}"; do _pr_str "${x}"; res="${res} ${r}"; done
+    local text="${res:1}"
+    local line="${ANON["${cdate}"]} - INFO - [${ANON["${ppid}"]}] - ${text}"
+    printf "log: %s\n" "${line}"
+    echo "${line}" >> "${x_logFile}"
+    r="${__nil}"
+}
+
+declare -A ext_ns=(
+    [get-pid]=get-pid
+    [get-ppid]=get-ppid
+    [current-date]=current-date
+    [log]=log
+    )

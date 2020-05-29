@@ -4,14 +4,15 @@
 ;----------------------------------------------------------------------------------------------------------------------
 (defn get-env [name] (get (env) name))
 
-(defn get-pid [] (str (sh* "echo $$") "-" (sh* "echo $BASHPID")))
+;(defn process-id [] (str (sh* "echo $$") "-" (sh* "echo $BASHPID")))
+(defn process-id [] (str (get-pid) "-" (get-ppid)))
 
 (defn current-date-str [] (let [date-str (sh* "echo $(date '+%Y-%m-%d %H:%M:%S.%N' |cut -b1-23)")] date-str))
 
-(defn log [value & args]
-  (let [line (str (current-date-str) " - INFO - [" (get-pid) "] - " (if (empty? args) value (str value " " args)))]
-    (println "log: " line)
-    (sh* (str "echo \"" line "\" >> imgot.log"))))
+;(defn log [value & args]
+;  (let [line (str (current-date-str) " - INFO - [" (process-id) "] - " (if (empty? args) value (str value " " args)))]
+;    (println "log: " line)
+;    (sh* (str "echo \"" line "\" >> imgot.log"))))
 
 (defn rand [] (sh* "num=$(</dev/urandom tr -dc 0-9 | dd bs=5 count=1 2>/dev/null) ; echo \"scale=6 ; 1.0*$num/99999\" | bc"))
 

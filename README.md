@@ -70,5 +70,5 @@ to this
 Execute **imgot** script as shown:
 
 ```
-./imgot.clj images/input.png images/output.png
+./run imgot images/input.png images/output.png
 ```
