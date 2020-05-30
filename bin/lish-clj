@@ -8,6 +8,36 @@ spit () {
     r="${__nil}"
 }
 
+even? () {
+    local num="${ANON["${1}"]}"
+    re='^[-0-9]+$'
+    if ! [[ $num =~ $re ]] ; then
+        _error "IllegalArgument - Argument must be an integer: $num"
+    else
+        if [ $(($num%2)) -eq 0 ] ; then
+            r="${__true}"
+        else
+            r="${__false}"
+        fi
+    fi
+}
+
+odd? () {
+    local num="${ANON["${1}"]}"
+    re='^[-0-9]+$'
+    if ! [[ $num =~ $re ]] ; then
+        _error "IllegalArgument - Argument must be an integer: $num"
+    else
+        if [ ! $(($num%2)) -eq 0 ] ; then
+            r="${__true}"
+        else
+            r="${__false}"
+        fi
+    fi
+}
+
 declare -A clj_ns=(
     [spit]=spit
-    )
+    [even?]=even?
+    [odd?]=odd?
+)
